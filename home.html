@@ -1,1 +1,51 @@
 
+<html>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  
+  <table style="border:solid;">
+  </table>
+  
+  <script>
+    var $ = jQuery.noConflict();
+    var authToken = decodeURI(window.location.href.split('=')[1].split('&')[0]);
+    
+    // Make a call to salesforce using this access_token & get list of records form Bouquet__c table
+    $.ajax({
+      type : 'GET',
+      url : 'https://eu8.salesforce.com/services/data/v43.0/query?q=' +
+            'Select Id, Deliver_To__c, Delivery_Date__c, Message From Bouquet__c',
+      headers : {
+        'Authorization' : 'Bearer ' + authToken,
+        'Content-Type' : 'application/json'
+      },
+      
+      success : function(resonse) {
+        // Build header
+        var tableHeader = '<thead><tr' +
+            '<th>Deliver To</th>' +
+            '<th>Delivery Date</th>' +
+            '<th>Message</th>' +
+            '</tr></thead>';
+        
+        // Build rows
+        var tableRows = '<tbody>';
+        
+        $.each(response.results, function(i, rec) {
+           tableRows += '<tr>';
+           tableRows += '<td>' + rec.Devliver_To__c + '</td>';   
+           tableRows += '<td>' + rec.Devlivery_Date__c + '</td>';   
+           tableRows += '<td>' + rec.Message__c + '</td>';             
+           tableRows += '</tr>';          
+        });
+        
+        tableRows += '</tbody>';
+      }
+      
+      $('table').append($(tableHeader + tableRows));
+      
+    });
+    
+  </script>
+  
+</html>
