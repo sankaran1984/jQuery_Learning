@@ -16,7 +16,7 @@
     $.ajax({
       type : 'GET',
       url : 'https://eu8.salesforce.com/services/data/v43.0/query?q=' +
-            'Select Id, Deliver_To__c, Delivery_Date__c, Message From Bouquet__c',
+            'Select Id, Deliver_To__c, Delivery_Date__c, Message__c From Bouquet__c',
       headers : {
         'Authorization' : 'Bearer ' + authToken,
         'Content-Type' : 'application/json'
